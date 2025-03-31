@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Document Summarizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #bbbbbb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.192);
+            max-width: 500px;
+            width: 100%;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="file"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .summary {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .summarization-methods {
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.summarization-methods select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Legal Document Summarizer</h2>
+        <form method="post"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="file" accept=".pdf"><hr>
+            <textarea name="text" placeholder="Enter legal text here..."></textarea>
+            <div class="summarization-methods">
+                <h4>Summarization Method:</h4>
+                <select name="method">
+                    <option value="0">Extractive Summarization</option>
+                    <option value="1">Abstractive Summarization</option>
+                </select>
+            </div>
+            <button type="submit">Summarize</button>
+        </form>
+        {% if summary %}
+        <div class="summary">
+            <strong>Summary:</strong> {{ summary }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
